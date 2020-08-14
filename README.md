@@ -1,6 +1,6 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# enumerables
+# Enumerables Methods
 
 > This is a collaborative project with Ruby for a Enumerable methods.
 
