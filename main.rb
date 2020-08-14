@@ -77,11 +77,11 @@ end
 
 [1, 2, 3].my_each { |num| puts num }
 [8, 9, 10].my_each_with_index { |num, idx| puts "num is #{num} at index #{idx}" }
-p[1, 2, 3, 4, 5, 6].my_select { |x| x.is_a?(Integer) }
-p[0, 1, 2, 3, 4, 5, 6].my_all? { |x| x >= 1 }
-p[1, 2, 3, 4, 5, 6, 7].my_any? { |x| x > 7 }
-p[1, 2, 3, 4, 5, 6, 7].my_none? { |x| x >= 7 }
-p[2, 2, 2, 2, 2, 3, 4].my_count { |x| x == 2 }
-p[2, 4, 5].my_map { |x| x * 2 }
-p[5, 6, 10].my_inject { |sum, n| sum + n }
+p([1, 2, 3, 4, 5, 6]).my_select { |x| x.is_a?(Integer) }
+p([0, 1, 2, 3, 4, 5, 6]).my_all? { |x| x >= 1 }
+p([1, 2, 3, 4, 5, 6, 7]).my_any? { |x| x > 7 }
+p([1, 2, 3, 4, 5, 6, 7]).my_none? { |x| x >= 7 }
+p([2, 2, 2, 2, 2, 3, 4]).my_count { |x| x == 2 }
+p([2, 4, 5]).my_map { |x| x * 2 }
+p([5, 6, 10]).my_inject { |sum, n| sum + n }
 p multiply_els([2, 4, 5])
