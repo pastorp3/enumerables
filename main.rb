@@ -144,7 +144,7 @@ end
 
 mult = Proc.new {|x| x * 100}
 
-([8, 9, 10)].my_each_with_index { |num, idx| puts "num is #{num} at index #{idx}" }
+([8, 9, 10]).my_each_with_index { |num, idx| puts "num is #{num} at index #{idx}" }
 p([1, 2, 3, 4, 5, 6]).my_select { |x| x.is_a?(Integer) }
 p([0, 1, 2, 3, 4, 5, 6]).my_all? { |x| x >= 1 }
 p([1, 2, 3, 4, 5, 6, 7]).my_any? { |x| x > 7 }
