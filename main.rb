@@ -73,7 +73,7 @@ module Enumerable
       arr.my_each do |x|
         count += 1 if yield(x)
       end
-      count.zero?
+      count == 0
     end
   end
 
@@ -125,7 +125,7 @@ mult = proc { |x| x * 100 }
 
 [8, 9, 10].my_each_with_index { |num, idx| puts "num is #{num} at index #{idx}" }
 p([1, 2, 3, 4, 5, 6]).my_select { |x| x.is_a?(Integer) }
-([0, 1, 2, 3, 4, 5, 6]).my_all? { |x| x >= 1 }
+p([0, 1, 2, 3, 4, 5, 6]).my_all? { |x| x >= 1 }
 p([1, 2, 3, 4, 5, 6, 7]).my_any? { |x| x > 7 }
 p([1, 2, 3, 4, 5, 6, 7]).my_none? { |x| x >= 7 }
 p([2, 2, 2, 2, 2, 3, 4]).my_count { |x| x == 2 }
