@@ -100,7 +100,7 @@ module Enumerable
   end
 
   def my_map(*)
-    return  to_enum unless block_given?
+    return to_enum unless block_given?
 
     new_array = []
     my_each do |x|
@@ -113,7 +113,7 @@ end
 
 # Methods outside the module beacuse too many lines of code
 def my_select
-  return  to_enum unless block_given?
+  return to_enum unless block_given?
 
   arr = to_a
   new_array = []
@@ -124,7 +124,7 @@ def my_select
 end
 
 def my_each_with_index
-  return  to_enum unless block_given?
+  return to_enum unless block_given?
 
   i = 0
   arr = to_a
@@ -132,7 +132,7 @@ def my_each_with_index
     yield(arr[i], i)
     i += 1
   end
-  self.to_a
+  to_a
 end
 
 def my_inject(*)
@@ -159,5 +159,3 @@ public 'my_each_with_index'
 public 'my_select'
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
-
-p (1..5).my_all? 
