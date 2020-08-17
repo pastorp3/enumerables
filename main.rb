@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/CyclomaticComplexity
 module Enumerable
   def my_each
     return to_enum unless block_given?
@@ -137,3 +138,4 @@ end
 def multiply_else(input)
   input.my_inject { |k, n| k * n }
 end
+# rubocop:enable Metrics/CyclomaticComplexity
