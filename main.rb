@@ -21,7 +21,7 @@ module Enumerable
     end
   end
 
-  def my_all?
+  def my_all?(input = nil)
     arr = to_a
     if block_given? == false
       if arr.all_validate == false
@@ -157,3 +157,5 @@ public 'my_each_with_index'
 public 'my_select'
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
+
+puts %w[ant bear cat].my_all?(/t/)  
