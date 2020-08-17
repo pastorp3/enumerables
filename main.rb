@@ -1,6 +1,6 @@
 module Enumerable
   def my_each
-    return puts to_enum unless block_given?
+    return to_enum unless block_given?
 
     i = 0
     arr = to_a
@@ -21,22 +21,24 @@ module Enumerable
     end
   end
 
-  def my_select
-    return puts to_enum unless block_given?
-    arr = to_a
-    new_array = []
-    arr.my_each do |x|
-      new_array << x if yield(x) == true
+  def all_validate
+    arr = self
+    if block_given? == false && (arr.include?(false) == true || arr.include?(nil) == true)
+      false
+    elsif block_given? == false && (arr.include?(false) == false && arr.include?(nil) == false)
+      true
     end
-    return new_array
   end
 
   def my_all?
-    if block_given? == false && ((find { |x| x == false }) == false || (find { |x| x.nil? }).nil?)
-      false
-    elsif block_given? == false && ((find { |x| x == false }).nil? && (find { |x| x.nil? }).nil?)
-      true
-    elsif block_given?
+    arr = to_a
+    if block_given? == false
+      if arr.all_validate == false
+        false
+      elsif arr.all_validate == true
+        true
+      end
+    else
       arr = to_a
       count = 0
       arr.my_each do |x|
@@ -46,12 +48,25 @@ module Enumerable
     end
   end
 
-  def my_any?
-    if block_given? == false && (my_all? { |x| x.nil? }) != true && (my_all? { |x| x == false }) != true
-      true
-    elsif block_given? == false && (my_all? { |x| x.nil? }) != false || (my_all? { |x| x == false }) != false
+  def any_validate
+    nilv = proc { |x| x.nil? }
+    arr = self
+    if block_given? == false && (arr.my_all?(&nilv) == true || arr.my_all? { |x| x == false } == true)
       false
-    elsif block_given?
+    elsif block_given? == false && (arr.my_all?(&nilv) == false && arr.my_all? { |x| x == false } == false)
+      true
+    end
+  end
+
+  def my_any?
+    arr = to_a
+    if block_given? == false
+      if arr.any_validate == false
+        false
+      elsif arr.any_validate == true
+        true
+      end
+    else
       arr = to_a
       count = 0
       arr.my_each do |x|
@@ -62,17 +77,20 @@ module Enumerable
   end
 
   def my_none?
-    if block_given? == false && (my_all? { |x| x.nil? }) != false || (my_all? { |x| x == false }) != false
-      true
-    elsif block_given? == false && (my_all? { |x| x.nil? }) != true && (my_all? { |x| x == false }) != true
-      false
-    elsif block_given?
+    arr = to_a
+    if block_given? == false
+      if arr.any_validate == false
+        true
+      elsif arr.any_validate == true
+        false
+      end
+    else
       arr = to_a
       count = 0
       arr.my_each do |x|
         count += 1 if yield(x)
       end
-      count == 0
+      count.zero?
     end
   end
 
@@ -91,6 +109,7 @@ module Enumerable
 
   def my_map
     return puts to_enum unless block_given?
+
     new_array = []
     my_each do |x|
       new_value = yield(x)
@@ -101,6 +120,7 @@ module Enumerable
 
   def my_inject
     return LocalJumpError unless block_given?
+
     n = 1
     arr = to_a
     sum = arr[0]
@@ -117,18 +137,3 @@ end
 def multiply_else(input)
   input.my_inject { |k, n| k * n }
 end
-
-# Test
-
-mult = proc { |x| x * 100 }
-
-[8, 9, 10].my_each_with_index { |num, idx| puts "num is #{num} at index #{idx}" }
-p([1, 2, 3, 4, 5]).my_select { |x| x > 3 }
-puts ([1, 2, 3, 4]).my_all? { |x| x > 1 }
-puts ([nil, 1]).my_any?
-puts ([1, 2, 3, 4]).my_any? { |x| x == 1 }
-puts (1..50).my_none? { |x| x > 49 }
-puts (1..50).my_count { |x| x.even? }
-p (1..10).my_map(&mult)
-p (1..20).my_inject { |x| x * 2 }
-p multiply_else([2, 4, 5])
