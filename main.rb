@@ -111,8 +111,10 @@ module Enumerable
 end
 
 #Methods outside the module beacuse too many lines of code
+
 def my_select
   return puts to_enum unless block_given?
+
   arr = to_a
   new_array = []
   arr.my_each do |x|
