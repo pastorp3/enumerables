@@ -144,4 +144,3 @@ public 'my_inject'
 public 'my_each_with_index'
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
-
