@@ -21,7 +21,7 @@ module Enumerable
     end
   end
 
-  def my_all?(input = nil)
+  def my_all?(*)
     arr = to_a
     if block_given? == false
       if arr.all_validate == false
@@ -49,7 +49,7 @@ module Enumerable
     end
   end
 
-  def my_any?
+  def my_any?(*)
     arr = to_a
     if block_given? == false
       if arr.any_validate == false
@@ -67,7 +67,7 @@ module Enumerable
     end
   end
 
-  def my_none?
+  def my_none?(*)
     arr = to_a
     if block_given? == false
       if arr.any_validate == false
@@ -85,7 +85,7 @@ module Enumerable
     end
   end
 
-  def my_count
+  def my_count(*)
     if block_given? == false
       arr = to_a
       puts arr.length
@@ -98,7 +98,7 @@ module Enumerable
     end
   end
 
-  def my_map
+  def my_map(*)
     return puts to_enum unless block_given?
 
     new_array = []
@@ -133,7 +133,7 @@ def my_each_with_index
   end
 end
 
-def my_inject
+def my_inject(*)
   return LocalJumpError unless block_given?
 
   n = 1
@@ -157,5 +157,3 @@ public 'my_each_with_index'
 public 'my_select'
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
-
-puts %w[ant bear cat].my_all?(/t/)  
