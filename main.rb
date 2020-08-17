@@ -3,7 +3,6 @@
 module Enumerable
   def my_each
     return to_enum unless block_given?
-
     i = 0
     arr = to_a
     while i <= arr.length - 1
@@ -12,16 +11,7 @@ module Enumerable
     end
   end
 
-  def my_each_with_index
-    return puts to_enum unless block_given?
 
-    i = 0
-    arr = to_a
-    while i <= arr.length - 1
-      yield(arr[i], i)
-      i += 1
-    end
-  end
 
   def all_validate
     arr = self
@@ -111,7 +101,6 @@ module Enumerable
 
   def my_map
     return puts to_enum unless block_given?
-
     new_array = []
     my_each do |x|
       new_value = yield(x)
@@ -119,26 +108,37 @@ module Enumerable
     end
     new_array
   end
+end
 
-  def my_inject
-    return LocalJumpError unless block_given?
-
-    n = 1
-    arr = to_a
-    sum = arr[0]
-    result = 0
-    while n < arr.length
-      result = yield(sum, arr[n])
-      sum = result
-      n += 1
-    end
-    result
+def my_each_with_index
+  return puts to_enum unless block_given?
+  i = 0
+  arr = to_a
+  while i <= arr.length - 1
+    yield(arr[i], i)
+    i += 1
   end
+end
+
+def my_inject
+  return LocalJumpError unless block_given?
+  n = 1
+  arr = to_a
+  sum = arr[0]
+  result = 0
+  while n < arr.length
+    result = yield(sum, arr[n])
+    sum = result
+    n += 1
+  end
+  result
 end
 
 def multiply_else(input)
   input.my_inject { |k, n| k * n }
 end
+
+public "my_inject"
+public "my_each_with_index"
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
-
