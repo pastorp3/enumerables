@@ -110,7 +110,7 @@ module Enumerable
   end
 end
 
-#Methods outside the module beacuse too many lines of code
+# Methods outside the module beacuse too many lines of code
 
 def my_select
   return puts to_enum unless block_given?
