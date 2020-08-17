@@ -12,6 +12,16 @@ module Enumerable
     end
   end
 
+  def my_select
+    return puts to_enum unless block_given?
+    arr = to_a
+    new_array = []
+    arr.my_each do |x|
+      new_array << x if yield(x) == true
+    end
+    new_array
+  end
+
   def all_validate
     arr = self
     if block_given? == false && (arr.include?(false) == true || arr.include?(nil) == true)
