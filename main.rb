@@ -10,6 +10,7 @@ module Enumerable
       yield(arr[i])
       i += 1
     end
+    self
   end
 
   def all_validate
@@ -57,7 +58,7 @@ module Enumerable
       elsif arr.any_validate == true
         true
       end
-    else
+    elsif block_given? == true && argument_given? == false
       arr = to_a
       count = 0
       arr.my_each do |x|
@@ -99,7 +100,7 @@ module Enumerable
   end
 
   def my_map(*)
-    return puts to_enum unless block_given?
+    return  to_enum unless block_given?
 
     new_array = []
     my_each do |x|
@@ -112,7 +113,7 @@ end
 
 # Methods outside the module beacuse too many lines of code
 def my_select
-  return puts to_enum unless block_given?
+  return  to_enum unless block_given?
 
   arr = to_a
   new_array = []
@@ -123,7 +124,7 @@ def my_select
 end
 
 def my_each_with_index
-  return puts to_enum unless block_given?
+  return  to_enum unless block_given?
 
   i = 0
   arr = to_a
@@ -131,6 +132,7 @@ def my_each_with_index
     yield(arr[i], i)
     i += 1
   end
+  self.to_a
 end
 
 def my_inject(*)
@@ -157,3 +159,5 @@ public 'my_each_with_index'
 public 'my_select'
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
+
+p (1..5).my_all? 
