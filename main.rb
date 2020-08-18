@@ -1,3 +1,5 @@
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
 def my_each
   return to_enum unless block_given?
 
@@ -271,3 +273,6 @@ public 'my_map'
 public 'my_inject'
 public 'my_inject'
 public 'multiply_els'
+
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
