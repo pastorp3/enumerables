@@ -181,18 +181,15 @@ def my_inject_option1(initial, arr)
   if initial.is_a?(Symbol) && arr.my_all?(Integer)
     if initial == :+
       memo = 0
-      arr.each do |x|
-        memo += x
+      arr.each do |x| memo += x
       end
     elsif initial == :-
       memo = 0
-      arr.each do |x|
-        memo -= x
+      arr.each do |x| memo -= x
       end
     elsif initial == :*
       memo = 1
-      arr.each do |x|
-        memo *= x
+      arr.each do |x| memo *= x
       end
     elsif initial == :/
       memo = 0
