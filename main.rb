@@ -199,10 +199,8 @@ def my_inject(initial = nil, input = nil)
           memo *= x
         end
       elsif initial == :/
-       if arr.my_all?(1)
-          memo = 1
-       else memo = 0
-       end
+        memo = 0
+        return memo = 1 if arr.my_all?(1)
       end
     end
   elsif block_given? == false && initial.nil? == false && input.nil? == false
@@ -224,10 +222,8 @@ def my_inject(initial = nil, input = nil)
           memo *= x
         end
       elsif input == :/
-        if arr.my_all?(1)
-          memo = 1
-        else memo = 0
-        end
+        memo = 0
+        return memo = 1 if arr.my_all?(1)
       end
     end
   elsif block_given? == true && initial.nil? == false && input.nil?
