@@ -24,18 +24,18 @@ def my_each_with_index
   self
 end
 
-def my_all_option1(input = nil,arr)
-    count = 0
-    arr.my_each do |x|
-      if input.is_a?(Integer)
-        count += 1 if x == input
-      elsif input.is_a?(Regexp)
-        count += 1 unless (x =~ input).nil?
-      elsif input.is_a?(Class)
-        count += 1 if x.is_a?(input)
-      end
+def my_all_option1(input, arr)
+  count = 0
+  arr.my_each do |x|
+    if input.is_a?(Integer)
+      count += 1 if x == input
+    elsif input.is_a?(Regexp)
+      count += 1 unless (x =~ input).nil?
+    elsif input.is_a?(Class)
+      count += 1 if x.is_a?(input)
     end
-    return count
+  end
+  count
 end
 
 def my_all?(input = nil)
@@ -47,7 +47,7 @@ def my_all?(input = nil)
       true
     end
   elsif block_given? == false && !input.nil?
-    count = my_all_option1(input,arr)
+    count = my_all_option1(input, arr)
     count == arr.length
   elsif block_given? == true
     arr = to_a
@@ -57,46 +57,9 @@ def my_all?(input = nil)
     end
     count == arr.length
   end
-  
 end
 
-def my_any_option(input = nil,arr)
-    count = 0
-    arr.my_each do |x|
-      if input.is_a?(Integer)
-        count += 1 if x == input
-      elsif input.is_a?(Regexp)
-        count += 1 unless (x =~ input).nil?
-      elsif input.is_a?(Class)
-        count += 1 if x.is_a?(input)
-      end
-    end
-    return count
-end
-
-def my_any?(input = nil)
-  arr = to_a
-  if block_given? == false && input.nil?
-    if block_given? == false && (arr.my_all? { |x| x == nil || x == false}) == false
-      true
-    else
-      false
-    end
-  elsif block_given? == false && !input.nil?
-    count = my_any_option(input,arr)
-    count >= 1
-  elsif block_given? == true
-    arr = to_a
-    count = 0
-    arr.my_each do |x|
-      count += 1 if yield(x) == true
-    end
-    count >= 1
-  end
-end
-
-def my_none_option(input = nil,arr)
-  arr = to_a
+def my_any_option(input, arr)
   count = 0
   arr.my_each do |x|
     if input.is_a?(Integer)
@@ -107,19 +70,54 @@ def my_none_option(input = nil,arr)
       count += 1 if x.is_a?(input)
     end
   end
-  return count 
+  count
 end
 
-def my_none?(input = nil)
+def my_any?(input = nil)
   arr = to_a
   if block_given? == false && input.nil?
-    if block_given? == false && arr.my_all? {|x| x == nil || x == false} == true
+    if block_given? == false && (arr.my_all? { |x| x.nil? || x == false }) == false
       true
     else
       false
     end
   elsif block_given? == false && !input.nil?
-    count = my_none_option(input,arr)
+    count = my_any_option(input, arr)
+    count >= 1
+  elsif block_given? == true
+    arr = to_a
+    count = 0
+    arr.my_each do |x|
+      count += 1 if yield(x) == true
+    end
+    count >= 1
+  end
+end
+
+def my_none_option(input, arr)
+  count = 0
+  arr.my_each do |x|
+    if input.is_a?(Integer)
+      count += 1 if x == input
+    elsif input.is_a?(Regexp)
+      count += 1 unless (x =~ input).nil?
+    elsif input.is_a?(Class)
+      count += 1 if x.is_a?(input)
+    end
+  end
+  count
+end
+
+def my_none?(input = nil)
+  arr = to_a
+  if block_given? == false && input.nil?
+    if block_given? == false && arr.my_all? { |x| x.nil? || x == false } == true
+      true
+    else
+      false
+    end
+  elsif block_given? == false && !input.nil?
+    count = my_none_option(input, arr)
     count.zero?
   elsif block_given? == true
     arr = to_a
@@ -131,7 +129,7 @@ def my_none?(input = nil)
   end
 end
 
-def my_count_option (input=nil,arr)
+def my_count_option(input, arr)
   count = 0
   arr.my_each do |x|
     if input.is_a?(Integer)
@@ -140,7 +138,7 @@ def my_count_option (input=nil,arr)
       count
     end
   end
-  return count
+  count
 end
 
 def my_count(input = nil)
@@ -149,7 +147,7 @@ def my_count(input = nil)
     arr.length
   elsif block_given? == false && !input.nil?
     arr = to_a
-    count = my_count_option(input,arr)
+    count = my_count_option(input, arr)
   elsif block_given? == true
     count = 0
     arr = to_a
@@ -179,7 +177,7 @@ def my_map(input = nil)
   new_array
 end
 
-def my_inject_option1(initial = nil,arr)
+def my_inject_option1(initial, arr)
   if initial.is_a?(Symbol) && arr.my_all?(Integer)
     if initial == :+
       memo = 0
@@ -201,10 +199,10 @@ def my_inject_option1(initial = nil,arr)
       return memo = 1 if arr.my_all?(1)
     end
   end
-  return memo
+  memo
 end
 
-def my_inject_option2(initial=nil,input=nil,arr)
+def my_inject_option2(initial, input, arr)
   if input == :+
     memo = initial
     arr.each do |x|
@@ -224,7 +222,7 @@ def my_inject_option2(initial=nil,input=nil,arr)
     memo = 0
     return memo = 1 if arr.my_all?(1)
   end
-  return memo
+  memo
 end
 
 def my_inject(initial = nil, input = nil)
@@ -232,12 +230,12 @@ def my_inject(initial = nil, input = nil)
 
   if block_given? == false && input.nil? && initial.nil? == false
     arr = to_a
-    memo = my_inject_option1(initial,arr)
+    memo = my_inject_option1(initial, arr)
     memo
   elsif block_given? == false && initial.nil? == false && input.nil? == false
     arr = to_a
     if initial.is_a?(Integer) && arr.my_all?(Integer) && input.is_a?(Symbol)
-      memo = my_inject_option2(initial,input,arr)
+      memo = my_inject_option2(initial, input, arr)
       memo
     end
   elsif block_given? == true && initial.nil? == false && input.nil?
