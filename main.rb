@@ -250,7 +250,7 @@ def my_inject(initial = nil, input = nil)
       memo
     elsif arr.my_all?(String)
       memo = []
-      arr.my_each {|x| memo = yield(memo, x) }
+      arr.my_each { |x| memo = yield(memo, x) }
       memo
     end
   end
