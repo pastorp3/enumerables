@@ -181,14 +181,13 @@ def my_inject_option1(initial, arr)
   if initial.is_a?(Symbol) && arr.my_all?(Integer)
     if initial == :+
       memo = 0
-      arr.each {|x| memo += x}
+      arr.each { |x| memo += x }
     elsif initial == :-
       memo = 0
-      arr.each {|x| memo -= x}
+      arr.each { |x| memo -= x }
     elsif initial == :*
       memo = 1
-      arr.each { |x| memo *= x}
-    
+      arr.each { |x| memo *= x }
     elsif initial == :/
       memo = 0
       return memo = 1 if arr.my_all?(1)
@@ -237,9 +236,7 @@ def my_inject(initial = nil, input = nil)
     arr = to_a
     if initial.is_a?(Integer) && arr.my_all?(Integer) && input.nil?
       memo = initial
-      arr.my_each do |x|
-        memo = yield(memo, x)
-      end
+      arr.my_each { |x| memo = yield(memo, x) }
       memo
     elsif initial.is_a?(Integer) && arr.my_all?(String) && input.nil?
       memo = initial
@@ -249,15 +246,11 @@ def my_inject(initial = nil, input = nil)
     arr = to_a
     if arr.my_all?(Integer)
       memo = 0
-      arr.my_each do |x|
-        memo = yield(memo, x)
-      end
+      arr.my_each { |x| memo = yield(memo, x) }
       memo
     elsif arr.my_all?(String)
       memo = []
-      arr.my_each do |x|
-        memo = yield(memo, x)
-      end
+      arr.my_each {|x| memo = yield(memo, x) }
       memo
     end
   end
