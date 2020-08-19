@@ -219,8 +219,7 @@ def my_inject_option2(initial, input, arr)
   memo
 end
 
-
-def my_inject (initial = nil, input = nil)
+def my_inject(initial = nil, input = nil)
   raise LocalJumpError if block_given? == false && input.nil? && initial.nil?
 
   if block_given? == false && input.nil? && initial.nil? == false
@@ -249,7 +248,7 @@ def my_inject (initial = nil, input = nil)
       memo = arr[0]
       n = arr.length
       i = 1
-      ( n - 1 ).times do 
+      (n - 1).times do
         memo = yield(memo, arr[i])
         i += 1
       end
