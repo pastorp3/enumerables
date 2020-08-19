@@ -220,7 +220,7 @@ def my_inject_option2(initial, input, arr)
 end
 
 
-def my_inject(initial = nil, input = nil)
+def my_inject (initial = nil, input = nil)
   raise LocalJumpError if block_given? == false && input.nil? && initial.nil?
 
   if block_given? == false && input.nil? && initial.nil? == false
@@ -247,10 +247,10 @@ def my_inject(initial = nil, input = nil)
     arr = to_a
     if arr.my_all?(Integer)
       memo = arr[0]
-      n= arr.length
+      n = arr.length
       i = 1
-      (n-1).times do |e|
-        memo = yield(memo,arr[i])
+      ( n - 1 ).times do 
+        memo = yield(memo, arr[i])
         i += 1
       end
       memo
@@ -266,6 +266,17 @@ def multiply_els(input)
   input.my_inject(1) { |k, n| k * n }
 end
 
+def my_select
+  return to_enum unless block_given?
+
+  arr = to_a
+  new_array = []
+  arr.my_each do |x|
+    new_array << x if yield(x) == true
+  end
+ new_array
+end
+
 public 'my_each'
 public 'my_each_with_index'
 public 'my_all?'
@@ -276,7 +287,7 @@ public 'my_map'
 public 'my_inject'
 public 'my_inject'
 public 'multiply_els'
-
+public 'my_select'
 
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
