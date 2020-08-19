@@ -188,7 +188,7 @@ def my_inject_option1(initial, arr)
       memo = arr[0]
       n = arr.length
       i = 1
-      (n - 1).times do 
+      (n - 1).times do
         memo -= arr[i]
         i += 1
       end
