@@ -273,7 +273,7 @@ def my_select
   arr.my_each do |x|
     new_array << x if yield(x) == true
   end
- new_array
+  new_array
 end
 
 public 'my_each'
