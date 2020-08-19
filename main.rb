@@ -196,8 +196,13 @@ def my_inject_option1(initial, arr)
       memo = 1
       arr.each { |x| memo *= x }
     elsif initial == :/
-      memo = 0
-      return memo = 1 if arr.my_all?(1)
+      memo = arr[0]
+      n = arr.length
+      i = 1
+      (n - 1).times do
+        memo /= arr[i]
+        i += 1
+      end
     end
   end
   memo
@@ -220,8 +225,10 @@ def my_inject_option2(initial, input, arr)
       memo *= x
     end
   elsif input == :/
-    memo = 0
-    return memo = 1 if arr.my_all?(1)
+    memo = initial
+    arr.each do |x|
+      memo /= x
+    end
   end
   memo
 end
