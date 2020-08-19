@@ -42,9 +42,9 @@ def my_all?(input = nil)
   arr = to_a
   if block_given? == false && input.nil? == true
     if block_given? == false && (arr.include?(false) == false && arr.include?(nil) == false)
-      false
-    else
       true
+    else
+      false
     end
   elsif block_given? == false && !input.nil?
     count = my_all_option1(input, arr)
@@ -167,7 +167,7 @@ def my_map(input = nil)
       new_value = yield(x)
       new_array << new_value
     end
-  elsif block_given? == flase && !input.nil?
+  elsif block_given? == false && !input.nil?
     new_array = []
     my_each do |x|
       new_array << input[x] if input.is_a?(Proc)
@@ -219,6 +219,7 @@ def my_inject_option2(initial, input, arr)
   memo
 end
 
+
 def my_inject(initial = nil, input = nil)
   raise LocalJumpError if block_given? == false && input.nil? && initial.nil?
 
@@ -245,8 +246,13 @@ def my_inject(initial = nil, input = nil)
   elsif block_given? == true && initial.nil? && input.nil?
     arr = to_a
     if arr.my_all?(Integer)
-      memo = 0
-      arr.my_each { |x| memo = yield(memo, x) }
+      memo = arr[0]
+      n= arr.length
+      i = 1
+      (n-1).times do |e|
+        memo = yield(memo,arr[i])
+        i += 1
+      end
       memo
     elsif arr.my_all?(String)
       memo = []
@@ -270,6 +276,7 @@ public 'my_map'
 public 'my_inject'
 public 'my_inject'
 public 'multiply_els'
+
 
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
