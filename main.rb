@@ -70,6 +70,8 @@ def my_any_option(input, arr)
       count += 1 unless (x =~ input).nil?
     elsif input.is_a?(Class)
       count += 1 if x.is_a?(input)
+    elsif input.is_a?(String)
+      count += 1 if x == input
     end
   end
   count
@@ -170,6 +172,11 @@ def my_map(input = nil)
       new_array << new_value
     end
   elsif block_given? == false && !input.nil?
+    new_array = []
+    my_each do |x|
+      new_array << input[x] if input.is_a?(Proc)
+    end
+  elsif block_given? == true && input.is_a?(Proc)
     new_array = []
     my_each do |x|
       new_array << input[x] if input.is_a?(Proc)
