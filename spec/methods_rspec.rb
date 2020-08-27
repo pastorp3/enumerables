@@ -60,6 +60,43 @@ public
         end
       end
 
+      def my_any_option(input, arr)
+        count = 0
+        arr.my_each do |x|
+          if input.is_a?(Integer)
+            count += 1 if x == input
+          elsif input.is_a?(Regexp)
+            count += 1 unless (x =~ input).nil?
+          elsif input.is_a?(Class)
+            count += 1 if x.is_a?(input)
+          elsif input.is_a?(String)
+            count += 1 if x == input
+          end
+        end
+        count
+      end
+      
+      def my_any?(input = nil)
+        arr = to_a
+        if block_given? == false && input.nil?
+          if block_given? == false && (arr.my_all? { |x| x.nil? || x == false }) == false
+            true
+          else
+            false
+          end
+        elsif block_given? == false && !input.nil?
+          count = my_any_option(input, arr)
+          count >= 1
+        elsif block_given? == true
+          arr = to_a
+          count = 0
+          arr.my_each do |x|
+            count += 1 if yield(x) == true
+          end
+          count >= 1
+        end
+      end
+
 
     describe '#my_each' do 
       it 'test my_each  method' do
@@ -111,7 +148,38 @@ public
          expect((arr).my_all?).to eql(true)
  
        end
+    end
 
+    describe'#my_any?' do 
+      it 'my_any? test with string = true' do
+       arr = ['ant' ,'bear' ,'cat']
+        expect((arr).my_any? { |word| word.length >= 3 }).to eql(true)
+      end
+      it 'my_any? test with string = true' do
+        arr = ['ant' ,'bear' ,'cat']
+         expect((arr).my_any? { |word| word.length >= 4 }).to eql(true)
+ 
+       end
+       it 'my_any? test with regex' do
+        arr = ['ant' ,'bear' ,'cat']
+         expect((arr).my_any?(/d/)).to eql(false)
+ 
+       end
+       it 'my_any? test with class' do
+        arr = [nil ,false , 99]
+         expect((arr).my_any?(Integer)).to eql(true)
+ 
+       end
+       it 'my_any? test with nil elements' do
+        arr = [nil ,false , 99]
+         expect((arr).my_any?).to eql(true)
+ 
+       end
+       it 'my_any? test with no elements' do
+        arr = []
+         expect((arr).my_any?).to eql(false)
+ 
+       end
     end
 
 
