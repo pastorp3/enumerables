@@ -132,6 +132,37 @@ public
         end
       end
 
+      def my_count_option(input, arr)
+        count = 0
+        arr.my_each do |x|
+          if input.is_a?(Integer)
+            count += 1 if x == input
+          else
+            count
+          end
+        end
+        count
+      end
+      
+      def my_count(input = nil)
+        if block_given? == false && input.nil?
+          arr = to_a
+          arr.length
+        elsif block_given? == false && !input.nil?
+          arr = to_a
+          count = my_count_option(input, arr)
+        elsif block_given? == true
+          count = 0
+          arr = to_a
+          arr.my_each do |x|
+            count += 1 if yield(x)
+          end
+          count
+        end
+      end
+
+ #TEST
+
 
     describe '#my_each' do 
       it 'test my_each  method' do
@@ -257,6 +288,22 @@ public
          expect((arr).my_none?).to eql(false)
        end
 
+    end
+
+    describe'#my_count' do 
+      it 'my_count without block' do 
+        arr = [1, 2, 4, 2]
+        expect((arr).my_count).to eql(4)
+      end
+
+      it 'my_count with argument' do 
+        arr = [1, 2, 4, 2]
+        expect((arr).my_count(2)).to eql(2)
+      end
+      it 'my_count with block' do 
+        arr = [1, 2, 4, 2]
+        expect((arr).my_count { |x| x%2==0 }).to eql(3)
+      end
     end
 
 
