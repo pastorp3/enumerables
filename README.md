@@ -11,6 +11,14 @@
 ## Install
 - Download Ruby from https://www.ruby-lang.org/en/ to run it locally .
 
+### Rspec Test
+You need to install it with `gem install rspec` to run the next test
+
+![screenshot](./img/rspec_test_1.png)
+
+To run the test type `rspec methods_rspec.rb --format documentation` in your terminal after instal rspec
+
+
 
 ## Clone
 - Clone the repository from https://github.com/atenaiis/enumerables
@@ -23,16 +31,16 @@
 
 ## Authors
 
-👤 **Author1**
-
+👤 **José Pedraza**
 - Github: [@pastorp3](https://github.com/pastorp3)
 - Twitter: [@jose_pastor](https://twitter.com/jose_pastorp3 )
 - Linkedin: [linkedin](https://www.linkedin.com/in/jos%C3%A9-pedraza-acevedo-ab700a1a9/)
 
-👤 **Author2**
 
-- Github: [@atenaiis](https://github.com/atenaiis)
-- Twitter: [@spranomarian]
+👤 **Tadeu Sarro**
+- Github: [@tadeuasarro](https://github.com/tadeuasarro)
+- Twitter: [@tadeuasarro](https://twitter.com/tadeuasarro)
+- Linkedin: [Tadeu Sarro](https://www.linkedin.com/in/tadeuasarro/)
 
 
 ## 🤝 Contributing
