@@ -38,7 +38,6 @@ public
 
 
 
-    
     describe '#my_each' do 
       it 'test my_each  method' do
       arr = [1,2,3,4]
