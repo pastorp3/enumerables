@@ -16,7 +16,7 @@ You need to install it with `gem install rspec` to run the next test
 
 ![screenshot](./img/rspec_test_1.png)
 
-To run the test type `rspec methods_rspec.rb --format documentation` in your terminal after instal rspec
+To run the test type `rspec --format documentation` in your terminal after instal rspec
 
 
 
