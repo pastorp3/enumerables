@@ -13,6 +13,18 @@ public
         self
       end
 
+      def my_each_with_index
+        return to_enum unless block_given?
+      
+        i = 0
+        arr = to_a
+        while i <= arr.length - 1
+          yield(arr[i], i)
+          i += 1
+        end
+        self
+      end
+
       def my_all_option1(input, arr)
         count = 0
         arr.my_each do |x|
@@ -58,6 +70,15 @@ public
         arr = [1,2,3,4]
         expect( (arr).my_each {|x| x }).to eql(arr)
       end
+    end
+
+    describe '#my_each_with_index' do 
+      it 'eadasd' do 
+      arr = ['cat' ,'dog' ,'wombat']
+      #expect((arr).my_each_with_index { |item, index| hash[item] = index }).to eql({"cat"=>0, "dog"=>1, "wombat"=>2})
+      
+      end
+    
     end
 
     describe'#my_all?' do 
