@@ -161,6 +161,126 @@ public
         end
       end
 
+      def my_map(input = nil)
+        return to_enum if block_given? == false && input.nil?
+      
+        if block_given? && input.nil?
+          new_array = []
+          my_each do |x|
+            new_value = yield(x)
+            new_array << new_value
+          end
+        elsif block_given? == false && !input.nil?
+          new_array = []
+          my_each do |x|
+            new_array << input[x] if input.is_a?(Proc)
+          end
+        elsif block_given? == true && input.is_a?(Proc)
+          new_array = []
+          my_each do |x|
+            new_array << input[x] if input.is_a?(Proc)
+          end
+        end
+      
+        new_array
+      end
+
+      def my_inject_option1(initial, arr)
+        if initial.is_a?(Symbol) && arr.my_all?(Integer)
+          if initial == :+
+            memo = 0
+            arr.each { |x| memo += x }
+          elsif initial == :-
+            memo = arr[0]
+            n = arr.length
+            i = 1
+            (n - 1).times do
+              memo -= arr[i]
+              i += 1
+            end
+          elsif initial == :*
+            memo = 1
+            arr.each { |x| memo *= x }
+          elsif initial == :/
+            memo = arr[0]
+            n = arr.length
+            i = 1
+            (n - 1).times do
+              memo /= arr[i]
+              i += 1
+            end
+          end
+        end
+        memo
+      end
+      
+      def my_inject_option2(initial, input, arr)
+        if input == :+
+          memo = initial
+          arr.each do |x|
+            memo += x
+          end
+        elsif input == :-
+          memo = initial
+          arr.each do |x|
+            memo -= x
+          end
+        elsif input == :*
+          memo = initial
+          arr.each do |x|
+            memo *= x
+          end
+        elsif input == :/
+          memo = initial
+          arr.each do |x|
+            memo /= x
+          end
+        end
+        memo
+      end
+      
+      def my_inject(initial = nil, input = nil)
+        raise LocalJumpError if block_given? == false && input.nil? && initial.nil?
+      
+        if block_given? == false && input.nil? && initial.nil? == false
+          arr = to_a
+          memo = my_inject_option1(initial, arr)
+          memo
+        elsif block_given? == false && initial.nil? == false && input.nil? == false
+          arr = to_a
+          if initial.is_a?(Integer) && arr.my_all?(Integer) && input.is_a?(Symbol)
+            memo = my_inject_option2(initial, input, arr)
+            memo
+          end
+        elsif block_given? == true && initial.nil? == false && input.nil?
+          arr = to_a
+          if initial.is_a?(Integer) && arr.my_all?(Integer) && input.nil?
+            memo = initial
+            arr.my_each { |x| memo = yield(memo, x) }
+            memo
+          elsif initial.is_a?(Integer) && arr.my_all?(String) && input.nil?
+            memo = initial
+            memo
+          end
+        elsif block_given? == true && initial.nil? && input.nil?
+          arr = to_a
+          if arr.my_all?(Integer)
+            memo = arr[0]
+            n = arr.length
+            i = 1
+            (n - 1).times do
+              memo = yield(memo, arr[i])
+              i += 1
+            end
+            memo
+          elsif arr.my_all?(String)
+            memo = []
+            arr.my_each { |x| memo = yield(memo, x) }
+            memo
+          end
+        end
+      end
+
  #TEST
 
 
@@ -303,6 +423,37 @@ public
       it 'my_count with block' do 
         arr = [1, 2, 4, 2]
         expect((arr).my_count { |x| x%2==0 }).to eql(3)
+      end
+    end
+
+    describe'#my_map' do 
+      it 'my_map with block' do 
+        range = (1..4)
+        expect((range).my_map { |i| i*i }).to eql([1, 4, 9, 16])
+      end
+      it 'my_map with no block given' do 
+        range = (1..4)
+        expect((range).my_map.class).to eql(Enumerator)
+      end
+    end
+
+    describe'#my_inject' do 
+      it 'my_inject with block given' do
+        range = (5..10)
+        expect((range).my_inject { |sum, n| sum + n }).to eql(45)
+      end
+      it 'my_inject with argument and symbol given' do
+        range = (5..10)
+        expect((range).my_inject(1, :*)).to eql(151200)
+      end
+      it 'my_inject with argument and block' do
+        range = (5..10)
+        expect((range).my_inject(1) { |product, n| product * n }).to eql(151200)
+      end
+      it 'my_inject with string' do
+        range = ['cat', 'sheep', 'bear']
+        expect((range).my_inject { |memo, word|
+          memo.length > word.length ? memo : word}).to eql("sheep")
       end
     end
 
