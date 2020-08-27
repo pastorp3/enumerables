@@ -97,6 +97,41 @@ public
         end
       end
 
+      def my_none_option(input, arr)
+        count = 0
+        arr.my_each do |x|
+          if input.is_a?(Integer)
+            count += 1 if x == input
+          elsif input.is_a?(Regexp)
+            count += 1 unless (x =~ input).nil?
+          elsif input.is_a?(Class)
+            count += 1 if x.is_a?(input)
+          end
+        end
+        count
+      end
+      
+      def my_none?(input = nil)
+        arr = to_a
+        if block_given? == false && input.nil?
+          if block_given? == false && arr.my_all? { |x| x.nil? || x == false } == true
+            true
+          else
+            false
+          end
+        elsif block_given? == false && !input.nil?
+          count = my_none_option(input, arr)
+          count.zero?
+        elsif block_given? == true
+          arr = to_a
+          count = 0
+          arr.my_each do |x|
+            count += 1 if yield(x) == true
+          end
+          count.zero?
+        end
+      end
+
 
     describe '#my_each' do 
       it 'test my_each  method' do
@@ -181,6 +216,49 @@ public
  
        end
     end
+
+    describe'#my_none?' do 
+      it 'my_none? test with string = true' do
+       arr = ['ant' ,'bear' ,'cat']
+        expect((arr).my_none? { |word| word.length >= 5 }).to eql(true)
+      end
+      it 'my_none? test with string = false' do
+        arr = ['ant' ,'bear' ,'cat']
+         expect((arr).my_none? { |word| word.length >= 4 }).to eql(false)
+ 
+       end
+       it 'my_any? test with regex' do
+        arr = ['ant' ,'bear' ,'cat']
+         expect((arr).my_none?(/d/)).to eql(true)
+ 
+       end
+
+       it 'my_none? with float' do
+        arr = [1, 3.14, 42]
+        expect((arr).my_none?(Float)).to eql(false)
+      end
+
+      it 'my_none? with no elements' do
+        arr = []
+        expect((arr).my_none?).to eql(true)
+      end
+      it 'my_none? with nil' do
+        arr = [nil]
+        expect((arr).my_none?).to eql(true)
+      end
+
+       it 'my_none? with nil and false' do
+        arr = [nil ,false]
+         expect((arr).my_none?).to eql(true)
+ 
+       end
+       it 'my_any? test with nil elements' do
+        arr = [nil ,false , true]
+         expect((arr).my_none?).to eql(false)
+       end
+
+    end
+
 
 
 
