@@ -316,8 +316,8 @@ end
 
 describe '#my_each_with_index' do
   it 'eadasd' do
-    arr = %w[cat dog wombat]
-    # expect((arr).my_each_with_index { |item, index| hash[item] = index }).to eql({"cat"=>0, "dog"=>1, "wombat"=>2})
+    arr = [11,22,31,224,44]
+    expect((arr).my_each_with_index { |val,index| puts "index: #{index} for #{val}" if val < 30}).to eql([11, 22, 31, 224, 44])
   end
 end
 
