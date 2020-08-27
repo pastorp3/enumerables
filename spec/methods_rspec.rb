@@ -1,4 +1,9 @@
-# ./spec/tictactoe_spec.rb
+# ./spec/methods_rspec.rb
+
+# rubocop:disable Metrics/CyclomaticComplexity
+# rubocop:disable Metrics/PerceivedComplexity
+# rubocop:disable Metrics/AbcSize
+# rubocop:disable Metrics/MethodLength
 
 public
 def my_each
@@ -472,3 +477,8 @@ describe '#my_select' do
     expect(arr.my_select.class).to eql(Enumerator)
   end
 end
+
+# rubocop:enable Metrics/AbcSize
+# rubocop:enable Metrics/MethodLength
+# rubocop:enable Metrics/CyclomaticComplexity
+# rubocop:enable Metrics/PerceivedComplexity
