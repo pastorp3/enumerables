@@ -1,9 +1,10 @@
-# ./spec/methods_rspec.rb
+# ./spec/methods_spec.rb
 
 # rubocop:disable Metrics/CyclomaticComplexity
 # rubocop:disable Metrics/PerceivedComplexity
 # rubocop:disable Metrics/AbcSize
 # rubocop:disable Metrics/MethodLength
+# rubocop:disable Style/SymbolProc
 
 public
 def my_each
@@ -16,7 +17,7 @@ def my_each
     i += 1
   end
   self
-  end
+end
 
 def my_each_with_index
   return to_enum unless block_given?
@@ -63,7 +64,7 @@ def my_all?(input = nil)
     end
     count == arr.length
   end
-  end
+end
 
 def my_any_option(input, arr)
   count = 0
@@ -316,8 +317,10 @@ end
 
 describe '#my_each_with_index' do
   it 'eadasd' do
-    arr = [11,22,31,224,44]
-    expect((arr).my_each_with_index { |val,index| puts "index: #{index} for #{val}" if val < 30}).to eql([11, 22, 31, 224, 44])
+    arr = [11, 22, 31, 224, 44]
+    expect(arr.my_each_with_index do |val, index|
+             puts "index: #{index} for #{val}" if val < 30
+           end).to eql([11, 22, 31, 224, 44])
   end
 end
 
@@ -482,3 +485,4 @@ end
 # rubocop:enable Metrics/MethodLength
 # rubocop:enable Metrics/CyclomaticComplexity
 # rubocop:enable Metrics/PerceivedComplexity
+# rubocop:enable Style/SymbolProc
